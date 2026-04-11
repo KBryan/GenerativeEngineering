@@ -1,0 +1,149 @@
+# Agentic Engineering Workflow — Lifecycle Entry Points
+# Version: v2.0 | Date: 2026-04-06
+#
+# Copy this file to your repository root and replace YOUR_* placeholders
+# with your actual commands. Agents and humans use these targets to
+# discover and run standard operations.
+#
+# Requires: https://github.com/casey/just
+
+# Default: show available commands
+default:
+    @just --list
+
+# ──────────────────────────────────────────────
+# Validation
+# ──────────────────────────────────────────────
+
+# Run all validation checks (lint + test + typecheck + build)
+validate: lint test typecheck build
+    @echo "All validation checks passed."
+
+# Run linter
+lint:
+    YOUR_LINT_COMMAND
+    # Examples:
+    #   ruff check .
+    #   eslint . --ext .ts,.tsx
+    #   cargo clippy -- -D warnings
+    #   go vet ./...
+
+# Run formatter in check mode
+format-check:
+    YOUR_FORMAT_COMMAND
+    # Examples:
+    #   ruff format --check .
+    #   prettier --check .
+    #   cargo fmt --check
+
+# Auto-fix formatting
+format:
+    YOUR_FORMAT_FIX_COMMAND
+    # Examples:
+    #   ruff format .
+    #   prettier --write .
+    #   cargo fmt
+
+# Run test suite
+test:
+    YOUR_TEST_COMMAND
+    # Examples:
+    #   pytest
+    #   npm test
+    #   cargo test
+    #   go test ./...
+
+# Run test suite with coverage
+test-coverage:
+    YOUR_COVERAGE_COMMAND
+    # Examples:
+    #   pytest --cov=src --cov-report=term-missing
+    #   npm run test:coverage
+    #   cargo tarpaulin
+
+# Run type checker
+typecheck:
+    YOUR_TYPECHECK_COMMAND
+    # Examples:
+    #   mypy src/
+    #   tsc --noEmit
+    #   echo "Type checking handled by compiler"
+
+# Build the project
+build:
+    YOUR_BUILD_COMMAND
+    # Examples:
+    #   python -m build
+    #   npm run build
+    #   cargo build
+    #   go build ./...
+
+# ──────────────────────────────────────────────
+# Development
+# ──────────────────────────────────────────────
+
+# Install dependencies
+setup:
+    YOUR_INSTALL_COMMAND
+    # Examples:
+    #   pip install -r requirements.txt
+    #   npm install
+    #   cargo build
+    #   go mod download
+
+# Start development server
+dev:
+    YOUR_DEV_COMMAND
+    # Examples:
+    #   uvicorn main:app --reload
+    #   npm run dev
+    #   cargo run
+
+# ──────────────────────────────────────────────
+# Agent Workflow
+# ──────────────────────────────────────────────
+
+# Create a new task plan from template
+plan name="new-task":
+    @mkdir -p .agent/plans
+    @cp templates/plan-template.md ".agent/plans/$(date +%Y-%m-%d)-{{name}}.md"
+    @echo "Plan created: .agent/plans/$(date +%Y-%m-%d)-{{name}}.md"
+
+# Create a new review checklist from template
+review name="new-review":
+    @mkdir -p .agent/reviews
+    @cp templates/review-template.md ".agent/reviews/$(date +%Y-%m-%d)-{{name}}.md"
+    @echo "Review created: .agent/reviews/$(date +%Y-%m-%d)-{{name}}.md"
+
+# Record current validation baseline
+baseline:
+    @echo "=== Validation Baseline ==="
+    @echo "Date: $(date +%Y-%m-%d)"
+    @echo ""
+    @echo "--- Tests ---"
+    -YOUR_TEST_COMMAND 2>&1 | tail -5
+    @echo ""
+    @echo "--- Lint ---"
+    -YOUR_LINT_COMMAND 2>&1 | tail -3
+    @echo ""
+    @echo "--- Type Check ---"
+    -YOUR_TYPECHECK_COMMAND 2>&1 | tail -3
+    @echo ""
+    @echo "--- Build ---"
+    -YOUR_BUILD_COMMAND 2>&1 | tail -3
+
+# ──────────────────────────────────────────────
+# Documentation
+# ──────────────────────────────────────────────
+
+# Verify AGENTS.md exists and is non-empty
+check-agents:
+    @test -s AGENTS.md && echo "PASS: AGENTS.md exists and is non-empty" || echo "FAIL: AGENTS.md missing or empty"
+
+# Generate documentation (if applicable)
+docs:
+    @echo "No docs generation configured. Add your command here."
+    # Examples:
+    #   mkdocs build
+    #   npm run docs
+    #   cargo doc
