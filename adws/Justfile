@@ -1,0 +1,57 @@
+# Task Manager API — Justfile
+# Run with: just <recipe>
+
+# Validate everything
+validate: lint test typecheck build
+
+# Lint with ruff
+lint:
+    ruff check .
+
+# Check formatting without changing files
+format-check:
+    ruff format --check .
+
+# Auto-format the codebase
+format:
+    ruff format .
+
+# Run the test suite
+test:
+    pytest
+
+# Run tests with coverage report
+test-coverage:
+    pytest --cov=src --cov-report=term-missing
+
+# Type check with mypy
+typecheck:
+    mypy src/
+
+# Build a distribution package
+build:
+    python -m build
+
+# Install dependencies
+setup:
+    pip install -r requirements.txt
+
+# Start the development server
+dev:
+    uvicorn src.task_manager.app:app --reload
+
+# Create a plan from template
+plan:
+    @echo "Create a plan using templates/plan-template.md"
+
+# Create a review from template
+review:
+    @echo "Create a review using templates/review-template.md"
+
+# Record validation baseline
+baseline:
+    @echo "Record baseline to .agent/baseline.md"
+
+# Verify AGENTS.md exists
+check-agents:
+    @test -f AGENTS.md && echo "AGENTS.md found" || echo "AGENTS.md missing"
