@@ -14,7 +14,7 @@ A modular, vendor-neutral standard for how autonomous coding agents should opera
 | **Vendor-neutral** | Core docs never reference a specific agent tool. Vendor specifics live in `adapters/`. |
 | **Modular** | Every document is independent. Adopt one file or all fifteen. |
 | **Incremental adoption** | Start with a 5-minute setup (Tier 1) and grow into advanced orchestration (Tier 3). |
-| **Any language, any agent** | The lifecycle and risk model work whether you ship Python, Rust, TypeScript, or COBOL. |
+| **Any language, any agent** | The lifecycle and risk model work whether you ship in Solidity, Python, Rust, TypeScript, or COBOL == \_(ツ)_/¯. |
 | **Actionable over aspirational** | Every section tells you what to *do*, not what to *think about*. |
 | **Templates are real files** | Copy-paste ready, with `<!-- CUSTOMIZE: -->` markers where you fill in your specifics. |
 
